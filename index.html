@@ -80,10 +80,7 @@ let count = 0;
 const max = 10;
 
 function addParticipant() {
-  if (count >= max) {
-    alert("10 аккаунттан аспайды");
-    return;
-  }
+  if (count >= max) return alert("10нан аспайды");
 
   count++;
 
@@ -91,9 +88,10 @@ function addParticipant() {
   div.className = "participant";
 
   div.innerHTML = `
-    <strong>Ойыншы ${count}</strong>
-    <input placeholder="Ник" required class="name">
-    <input placeholder="Ратуша" required class="age" type="number">
+    <strong>Участник ${count}</strong>
+    <input placeholder="Ник" class="name" required>
+    <input placeholder="Ратуша" class="age" type="number" required>
+    <input placeholder="Клан" class="city" required>
   `;
 
   document.getElementById('participants').appendChild(div);
