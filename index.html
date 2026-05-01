@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ЛВК тіркелу - WG Aq-Altin</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2 { text-align: center; }
+
+.participant {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background: #48bb78;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="form-box">
+  <h2>Тіркелу</h2>
+
+  <form id="form">
+    <div id="participants"></div>
+
+    <button type="button" class="add-btn" onclick="addParticipant()">+ Аккаунт қосу</button>
+
+    <!-- анти-спам -->
+    <input type="text" name="website" style="display:none">
+
+    <button type="submit">Жіберу</button>
+  </form>
+</div>
+
+<script>
+let count = 0;
+const max = 10;
+
+function addParticipant() {
+  if (count >= max) {
+    alert("10-нан аспайды");
+    return;
+  }
+
+  count++;
+
+  const div = document.createElement('div');
+  div.className = "participant";
+
+  div.innerHTML = `
+    <strong>Қатысушы ${count}</strong>
+    <input placeholder="Ник" required class="name">
+    <input placeholder="Ратуша" required class="age" type="number">
+  `;
+
+  document.getElementById('participants').appendChild(div);
+}
+
+// добавим первого участника сразу
+addParticipant();
+
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const names = document.querySelectorAll('.name');
+  const ages = document.querySelectorAll('.age');
+
+  let participants = [];
+
+  for (let i = 0; i < names.length; i++) {
+    participants.push({
+      name: names[i].value,
+      age: ages[i].value
+    });
+  }
+
+  const data = {
+    participants: participants,
+    website: this.website.value
+  };
+
+  fetch('ТВОЙ_APPS_SCRIPT_URL', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }).then(() => {
+    alert("Отправлено!");
+    location.reload();
+  });
+});
+</script>
+
+</body>
+</html>
