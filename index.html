@@ -1,78 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>ЛВК</title>
+<title>ЛВК тіркелу</title>
 
 <style>
 body {
+  margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg, #667eea, #764ba2);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-.form-box {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 350px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-h2 { text-align: center; }
-
-.participant {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-}
-
-input {
+/* Фон-картинка */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  height: 100%;
+
+  background: url('https://clashofclans.inbox.supercell.com/lqe2co20rkhw/2oETrhMgqyq8zvDtdIWBdG/c37d5b01d6e188fd006810fd2201d51e/sound_of_clash_inbox_banner.png') center/cover no-repeat;
+
+  filter: blur(3px);
+  transform: scale(1.1); /* чтобы не было краёв после blur */
+  z-index: -1;
 }
 
+/* Основная панель */
+.form-box {
+  position: relative;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  padding: 20px;
+  border-radius: 18px;
+  width: 360px;
+
+  border: 1px solid rgba(255,255,255,0.25);
+
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Заголовок */
+h2 {
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0px 0px #000;
+  margin-bottom: 15px;
+}
+
+/* Поля */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2d31;
+  color: white;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Кнопки */
 button {
   width: 100%;
   margin-top: 10px;
-  padding: 10px;
-  background: #667eea;
-  color: white;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
+  text-shadow: 1px 1px black;
 }
 
+/* Зеленая кнопка */
 .add-btn {
-  background: #48bb78;
+  background: linear-gradient(#4caf50, #2e7d32);
+  color: white;
 }
 
+/* Оранжевая (как attack) */
+.submit-btn {
+  background: linear-gradient(#ffb300, #ff6f00);
+  color: white;
+}
+
+/* Красная */
+.delete-btn {
+  background: linear-gradient(#e53935, #b71c1c);
+  color: white;
+}
+
+/* Карточка аккаунта */
+.participant {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.1),
+    0 4px 10px rgba(0,0,0,0.3);
+}
+
+strong {
+  color: #ffd700;
+  text-shadow: 1px 1px black;
+}
 </style>
 </head>
 
 <body>
 
 <div class="form-box">
-  <h2>Тіркелу</h2>
+<h2>⚔️ ЛВК тіркелу</h2>
 
-  <form id="form">
-    
-    <div id="participants"></div>
+<form id="form">
 
-    <button type="button" class="add-btn" onclick="addParticipant()">+ Аккаунт қосу</button>
+<div id="participants"></div>
 
-    <!-- анти-спам -->
-    <input type="text" name="website" style="display:none">
+<button type="button" class="add-btn" onclick="addParticipant()">+ Аккаунт қосу</button>
 
-    <button type="submit">Тіркелу</button>
-  </form>
+<input name="website" style="display:none">
+
+<button type="submit" class="submit-btn">🔥Тіркелу</button>
+
+</form>
 </div>
 
 <script>
@@ -80,7 +148,7 @@ let count = 0;
 const max = 10;
 
 function addParticipant() {
-  if (count >= max) return alert("10нан аспайды");
+  if (count >= max) return alert("❗ Макс 10 аккаунт");
 
   count++;
 
@@ -88,49 +156,101 @@ function addParticipant() {
   div.className = "participant";
 
   div.innerHTML = `
-    <strong>Участник ${count}</strong>
-    <input placeholder="Ник" class="name" required>
-    <input placeholder="Ратуша" class="age" type="number" required>
-    <input placeholder="Клан" class="city" required>
+    <strong>👤 Аккаунт ${count}</strong>
+
+    <input placeholder="🏷️ Ник" class="name" required>
+
+    <select class="age" required>
+      <option value="">🏰 TH таңда</option>
+      ${[9,10,11,12,13,14,15,16,17,18].map(th => `<option>TH ${th}</option>`).join('')}
+    </select>
+
+    <input placeholder="🛡️ Клан" class="city" required>
+
+    <input placeholder="📱 Нөмір (WhatsApp/Telegram)" class="number" required>
+
+    <button type="button" class="delete-btn" onclick="removeParticipant(this)">❌ Өшіру</button>
   `;
 
   document.getElementById('participants').appendChild(div);
 }
 
-// добавим первого участника сразу
+function removeParticipant(button) {
+  button.parentElement.remove();
+  updateNumbers();
+}
+
+function updateNumbers() {
+  const blocks = document.querySelectorAll('.participant');
+  count = blocks.length;
+
+  blocks.forEach((block, index) => {
+    block.querySelector('strong').innerText = "👤 Аккаунт " + (index + 1);
+  });
+}
+
 addParticipant();
 
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
   const names = document.querySelectorAll('.name');
-const ages = document.querySelectorAll('.age');
-const cities = document.querySelectorAll('.city');
+  const ages = document.querySelectorAll('.age');
+  const cities = document.querySelectorAll('.city');
+  const numbers = document.querySelectorAll('.number');
 
-let participants = [];
+  let participants = [];
 
-for (let i = 0; i < names.length; i++) {
-  participants.push({
-    name: names[i].value,
-    age: ages[i].value,
-    city: cities[i].value
-  });
-}
+  for (let i = 0; i < names.length; i++) {
+    participants.push({
+      name: names[i].value,
+      age: ages[i].value,
+      city: cities[i].value,
+      number: numbers[i].value
+    });
+  }
 
-const data = {
-  participants: participants,
-  website: this.website.value
-};
-  
+  const data = {
+    participants: participants,
+    website: this.website.value
+  };
+
   fetch('https://script.google.com/macros/s/AKfycbwiLpj35iiYJLjVNArn5v-adXoJGZx8LqT5Us_WLS--JZBnIKTF6ai0k4LEwz3j7YA9cw/exec', {
     method: 'POST',
     body: JSON.stringify(data)
   }).then(() => {
-    alert("Тіркелді!");
-    location.reload();
+    alert("🔥 Сен ЛВК-ға кірдің! Дайын бол 😎");
   });
 });
 </script>
 
 </body>
 </html>
+<style>
+/* 📱 Мобильная адаптация */
+@media (max-width: 480px) {
+
+  .form-box {
+    width: 95%;
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  input, select {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .participant {
+    padding: 10px;
+  }
+
+}
