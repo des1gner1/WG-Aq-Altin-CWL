@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ЛВК тіркелу - WG Aq-Altin</title>
+<title>ЛВК</title>
 
 <style>
 body {
@@ -63,16 +63,14 @@ button {
   <h2>Тіркелу</h2>
 
   <form id="form">
-    <input name="city" placeholder="Клан атауы" required>
     <div id="participants"></div>
-    
+
     <button type="button" class="add-btn" onclick="addParticipant()">+ Аккаунт қосу</button>
-    <input name="city" placeholder="Клан атауы" required>
 
     <!-- анти-спам -->
     <input type="text" name="website" style="display:none">
 
-    <button type="submit">Жіберу</button>
+    <button type="submit">Тіркелу</button>
   </form>
 </div>
 
@@ -82,7 +80,7 @@ const max = 10;
 
 function addParticipant() {
   if (count >= max) {
-    alert("10-нан аспайды");
+    alert("10 аккаунттан аспайды");
     return;
   }
 
@@ -92,7 +90,7 @@ function addParticipant() {
   div.className = "participant";
 
   div.innerHTML = `
-    <strong>Қатысушы ${count}</strong>
+    <strong>Ойыншы ${count}</strong>
     <input placeholder="Ник" required class="name">
     <input placeholder="Ратуша" required class="age" type="number">
   `;
@@ -119,12 +117,11 @@ document.getElementById('form').addEventListener('submit', function(e) {
   }
 
   const data = {
-  city: this.city.value,
-  participants: participants,
-  website: this.website.value
-};
+    participants: participants,
+    website: this.website.value
+  };
 
-  fetch('ТВОЙ_APPS_SCRIPT_URL', {
+  fetch('https://script.google.com/macros/s/AKfycbwiLpj35iiYJLjVNArn5v-adXoJGZx8LqT5Us_WLS--JZBnIKTF6ai0k4LEwz3j7YA9cw/exec', {
     method: 'POST',
     body: JSON.stringify(data)
   }).then(() => {
